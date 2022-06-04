@@ -3,7 +3,7 @@
 import discord, youtube_dl, asyncio, os
 from discord.ext import commands
 
-defaultVolume = 50
+defaultVolume = 0.1
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
@@ -52,15 +52,38 @@ class Music(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def lofi(self, ctx):
-        """Streams lofi"""
+    async def study(self, ctx):
+        """Streams beats to relax/study to"""
 
-        lofi_url = 'https://www.youtube.com/watch?v=5qap5aO4i9A'
+        studyURL = os.getenv('STUDY')
         async with ctx.typing():
-            player = await YTDLSource.from_url(lofi_url, loop=self.bot.loop, stream=True)
+            player = await YTDLSource.from_url(studyURL, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        ctx.voice_client.source.volume = defaultVolume / 1000
+        ctx.voice_client.source.volume = defaultVolume
+        await ctx.send(f'Now playing: {player.title}')
+
+    @commands.command()
+    async def chill(self, ctx):
+        """Streams beats to sleep/chill to"""
+
+        chillURL = os.getenv('CHILL')
+        async with ctx.typing():
+            player = await YTDLSource.from_url(chillURL, loop=self.bot.loop, stream=True)
+            ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
+
+        ctx.voice_client.source.volume = defaultVolume
+        await ctx.send(f'Now playing: {player.title}')
+
+    @commands.command()
+    async def stream(self, ctx, *, url):
+        """Streams from YouTube URL"""
+
+        async with ctx.typing():
+            player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
+            ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
+
+        ctx.voice_client.source.volume = defaultVolume
         await ctx.send(f'Now playing: {player.title}')
 
     @commands.command()
@@ -84,7 +107,9 @@ class Music(commands.Cog):
 
         await ctx.voice_client.disconnect()
 
-    @lofi.before_invoke
+    @study.before_invoke
+    @chill.before_invoke
+    @stream.before_invoke
     async def ensure_voice(self, ctx):
         if ctx.voice_client is None:
             if ctx.author.voice:
@@ -99,7 +124,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 bot = commands.Bot(
-    command_prefix=commands.when_mentioned_or("??"),
+    command_prefix=commands.when_mentioned_or(os.getenv('PREFIX')),
     description='24/7 lofi radio bot',
     intents=intents,
 )
