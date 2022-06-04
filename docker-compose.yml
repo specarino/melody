@@ -1,0 +1,14 @@
+---
+version: "3.2"
+services:
+  melody:
+    image: specarino/melody
+    container_name: melody
+    environment:
+      - TOKEN=DISCORD_BOT_TOKEN_HERE
+      - PREFIX=>
+      - STUDY=https://www.youtube.com/watch?v=5qap5aO4i9A
+      - CHILL=https://www.youtube.com/watch?v=DWcJFNfaw9c
+    volumes:
+      - /home/spec/opt/appdata/melody:/app
+    restart: unless-stopped
