@@ -2,7 +2,7 @@ FROM python:3.10.4-bullseye
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y ffmpeg
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg
 
 RUN git clone https://github.com/Rapptz/discord.py && \
     cd discord.py && \
