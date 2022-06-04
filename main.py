@@ -125,7 +125,7 @@ intents.message_content = True
 
 bot = commands.Bot(
     command_prefix=commands.when_mentioned_or(os.getenv('PREFIX')),
-    description='24/7 lofi radio bot',
+    description='melody - a 24/7 lofi radio bot powered by Discord.py',
     intents=intents,
 )
 
