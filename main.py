@@ -3,7 +3,7 @@
 import discord, youtube_dl, asyncio, os
 from discord.ext import commands
 
-defaultVolume = 0.1
+defaultVolume = 10
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
@@ -60,7 +60,7 @@ class Music(commands.Cog):
             player = await YTDLSource.from_url(studyURL, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        ctx.voice_client.source.volume = defaultVolume
+        ctx.voice_client.source.volume = defaultVolume/100
         await ctx.send(f'Now playing: {player.title}')
 
     @commands.command()
@@ -72,7 +72,7 @@ class Music(commands.Cog):
             player = await YTDLSource.from_url(chillURL, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        ctx.voice_client.source.volume = defaultVolume
+        ctx.voice_client.source.volume = defaultVolume/100
         await ctx.send(f'Now playing: {player.title}')
 
     @commands.command()
@@ -83,7 +83,7 @@ class Music(commands.Cog):
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        ctx.voice_client.source.volume = defaultVolume
+        ctx.voice_client.source.volume = defaultVolume/100
         await ctx.send(f'Now playing: {player.title}')
 
     @commands.command()
@@ -92,13 +92,13 @@ class Music(commands.Cog):
 
         if ctx.voice_client is None:
             return await ctx.send("Not connected to a voice channel.")
-
-        if volume > 100:
-            return await ctx.send("Maximum volume is 100%.")
+        if volume > 10:
+            return await ctx.send("Maximum volume is 10%.")
         if volume < 0:
             return await ctx.send("Minimum volume is 0%.")
 
-        ctx.voice_client.source.volume = volume / 1000
+        ctx.voice_client.source.volume = volume/100
+        print(ctx.voice_client.source.volume)
         await ctx.send(f"Changed volume to {volume}%")
 
     @commands.command()
