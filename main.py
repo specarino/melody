@@ -60,7 +60,7 @@ class Music(commands.Cog):
             player = await YTDLSource.from_url(studyURL, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        ctx.voice_client.source.volume = defaultVolume/100
+        ctx.voice_client.source.volume = defaultVolume/1000
         await ctx.send(f'Now playing: {player.title}')
 
     @commands.command()
@@ -72,7 +72,7 @@ class Music(commands.Cog):
             player = await YTDLSource.from_url(chillURL, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        ctx.voice_client.source.volume = defaultVolume/100
+        ctx.voice_client.source.volume = defaultVolume/1000
         await ctx.send(f'Now playing: {player.title}')
 
     @commands.command()
@@ -83,7 +83,7 @@ class Music(commands.Cog):
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        ctx.voice_client.source.volume = defaultVolume/100
+        ctx.voice_client.source.volume = defaultVolume/1000
         await ctx.send(f'Now playing: {player.title}')
 
     @commands.command()
@@ -97,7 +97,7 @@ class Music(commands.Cog):
         if volume < 0:
             return await ctx.send("Minimum volume is 0%.")
 
-        ctx.voice_client.source.volume = volume/100
+        ctx.voice_client.source.volume = volume/1000
         print(ctx.voice_client.source.volume)
         await ctx.send(f"Changed volume to {volume}%")
 
