@@ -6,7 +6,7 @@ services:
     container_name: melody
     environment:
       - TOKEN=DISCORD_BOT_TOKEN_HERE
-      - PREFIX=>
+      - PREFIX=.
       - STUDY=https://www.youtube.com/watch?v=5qap5aO4i9A
       - CHILL=https://www.youtube.com/watch?v=DWcJFNfaw9c
     restart: unless-stopped
