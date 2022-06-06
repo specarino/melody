@@ -63,8 +63,8 @@ class Music(commands.Cog):
         ctx.voice_client.source.volume = defaultVolume/1000
         await ctx.send(f'Now playing: {player.title}')
 
-    @commands.command(aliases=['p', 'play', 'yt'])
-    async def stream(self, ctx, *, url):
+    @commands.command(aliases=['p', 'stream', 'yt'])
+    async def play(self, ctx, *, url):
         """Streams from YouTube URL"""
 
         async with ctx.typing():
@@ -81,9 +81,9 @@ class Music(commands.Cog):
         if ctx.voice_client is None:
             return await ctx.send("Not connected to a voice channel.")
         if volume > 10:
-            return await ctx.send("Maximum volume is 10%.")
+            return await ctx.send("Maximum volume is 10.")
         if volume < 0:
-            return await ctx.send("Minimum volume is 0%.")
+            return await ctx.send("Minimum volume is 0.")
 
         ctx.voice_client.source.volume = volume/1000
         print(ctx.voice_client.source.volume)
@@ -96,7 +96,7 @@ class Music(commands.Cog):
         await ctx.voice_client.disconnect()
 
     @lofi.before_invoke
-    @stream.before_invoke
+    @play.before_invoke
     async def ensure_voice(self, ctx):
         if ctx.voice_client is None:
             if ctx.author.voice:
