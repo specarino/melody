@@ -87,7 +87,7 @@ class Music(commands.Cog):
 
         ctx.voice_client.source.volume = volume/1000
         print(ctx.voice_client.source.volume)
-        await ctx.send(f"Changed volume to {volume}%")
+        await ctx.send(f"Changed volume to {volume}")
 
     @commands.command(aliases=['disconnect', 'dc'])
     async def stop(self, ctx):
