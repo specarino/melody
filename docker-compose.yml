@@ -7,6 +7,5 @@ services:
     environment:
       - TOKEN=DISCORD_BOT_TOKEN_HERE
       - PREFIX=.
-      - STUDY=https://www.youtube.com/watch?v=5qap5aO4i9A
-      - CHILL=https://www.youtube.com/watch?v=DWcJFNfaw9c
+      - LOFI=https://www.youtube.com/watch?v=5qap5aO4i9A
     restart: unless-stopped

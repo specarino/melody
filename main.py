@@ -51,11 +51,11 @@ class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['lofi', 'lofi1'])
-    async def study(self, ctx):
+    @commands.command(aliases=['relax', 'study'])
+    async def lofi(self, ctx):
         """Streams beats to relax/study to"""
 
-        studyURL = os.getenv('STUDY')
+        studyURL = os.getenv('LOFI')
         async with ctx.typing():
             player = await YTDLSource.from_url(studyURL, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
@@ -63,19 +63,7 @@ class Music(commands.Cog):
         ctx.voice_client.source.volume = defaultVolume/1000
         await ctx.send(f'Now playing: {player.title}')
 
-    @commands.command(aliases=['lofi2'])
-    async def chill(self, ctx):
-        """Streams beats to sleep/chill to"""
-
-        chillURL = os.getenv('CHILL')
-        async with ctx.typing():
-            player = await YTDLSource.from_url(chillURL, loop=self.bot.loop, stream=True)
-            ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
-
-        ctx.voice_client.source.volume = defaultVolume/1000
-        await ctx.send(f'Now playing: {player.title}')
-
-    @commands.command(aliases=['play', 'yt'])
+    @commands.command(aliases=['p', 'play', 'yt'])
     async def stream(self, ctx, *, url):
         """Streams from YouTube URL"""
 
@@ -107,8 +95,7 @@ class Music(commands.Cog):
 
         await ctx.voice_client.disconnect()
 
-    @study.before_invoke
-    @chill.before_invoke
+    @lofi.before_invoke
     @stream.before_invoke
     async def ensure_voice(self, ctx):
         if ctx.voice_client is None:
@@ -117,9 +104,8 @@ class Music(commands.Cog):
             else:
                 await ctx.send("You are not connected to a voice channel.")
                 raise commands.CommandError("Author not connected to a voice channel.")
-#        elif ctx.voice_client.is_playing():
-#            ctx.voice_client.stop()
-# just for a test ^
+        elif ctx.voice_client.is_playing():
+            ctx.voice_client.stop()
 
 intents = discord.Intents.default()
 intents.message_content = True
