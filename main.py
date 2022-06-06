@@ -51,7 +51,7 @@ class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=['lofi', 'lofi1'])
     async def study(self, ctx):
         """Streams beats to relax/study to"""
 
@@ -63,7 +63,7 @@ class Music(commands.Cog):
         ctx.voice_client.source.volume = defaultVolume/1000
         await ctx.send(f'Now playing: {player.title}')
 
-    @commands.command()
+    @commands.command(aliases=['lofi2'])
     async def chill(self, ctx):
         """Streams beats to sleep/chill to"""
 
@@ -75,7 +75,7 @@ class Music(commands.Cog):
         ctx.voice_client.source.volume = defaultVolume/1000
         await ctx.send(f'Now playing: {player.title}')
 
-    @commands.command()
+    @commands.command(aliases=['play', 'yt'])
     async def stream(self, ctx, *, url):
         """Streams from YouTube URL"""
 
@@ -86,7 +86,7 @@ class Music(commands.Cog):
         ctx.voice_client.source.volume = defaultVolume/1000
         await ctx.send(f'Now playing: {player.title}')
 
-    @commands.command()
+    @commands.command(aliases=['vol', 'v'])
     async def volume(self, ctx, volume: int):
         """Changes the volume"""
 
@@ -101,7 +101,7 @@ class Music(commands.Cog):
         print(ctx.voice_client.source.volume)
         await ctx.send(f"Changed volume to {volume}%")
 
-    @commands.command()
+    @commands.command(aliases=['disconnect'])
     async def stop(self, ctx):
         """Stops and disconnects the bot"""
 
@@ -117,8 +117,9 @@ class Music(commands.Cog):
             else:
                 await ctx.send("You are not connected to a voice channel.")
                 raise commands.CommandError("Author not connected to a voice channel.")
-        elif ctx.voice_client.is_playing():
-            ctx.voice_client.stop()
+#        elif ctx.voice_client.is_playing():
+#            ctx.voice_client.stop()
+# just for a test ^
 
 intents = discord.Intents.default()
 intents.message_content = True
