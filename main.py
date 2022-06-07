@@ -55,9 +55,9 @@ class Music(commands.Cog):
     async def lofi(self, ctx):
         """Streams beats to relax/study to"""
 
-        studyURL = os.getenv('LOFI')
+        lofiURL = os.getenv('LOFI')
         async with ctx.typing():
-            player = await YTDLSource.from_url(studyURL, loop=self.bot.loop, stream=True)
+            player = await YTDLSource.from_url(lofiURL, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
         ctx.voice_client.source.volume = defaultVolume/1000
